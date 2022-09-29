@@ -1,67 +1,62 @@
-//update total price
-function updateTotalPrice() {
-  var Totalprix = document.getElementById("total-price");
-  let sum = 0;
-  let price = document.getElementsByClassName("price");
-
-  for (let i = 0; i < price.length; i++) {
-    sum += parseInt(price[i].innerHTML);
-    Totalprix.innerHTML = sum;
-  }
-  return Totalprix.innerHTML;
-}
-
-//plus button
-var PlusBtn = document.getElementsByClassName("plus-btn");
-for (let i = 0; i < PlusBtn.length; i++) {
-  PlusBtn[i].addEventListener("click", function (e) {
-    let qte = e.target.nextElementSibling;
-
-    qte.innerHTML = +qte.innerHTML + 1;
-    let prixU =
-      e.target.nextElementSibling.nextElementSibling.nextElementSibling;
-
-    let prixupdated =
-      e.target.nextElementSibling.nextElementSibling.nextElementSibling
-        .nextElementSibling.nextElementSibling;
-    prixupdated.innerHTML = parseInt(qte.innerHTML) * parseInt(prixU.innerHTML);
-    updateTotalPrice();
-  });
-}
-//minus button
-var minusBtn = document.getElementsByClassName("sustraction-btn");
-for (let i = 0; i < minusBtn.length; i++) {
-  minusBtn[i].addEventListener("click", function (e) {
-    let qte = e.target.previousElementSibling;
-    if (+qte.innerHTML > 0) {
-      qte.innerHTML = +qte.innerHTML - 1;
+function UpdateTotalPrice(){
+    const price = document.getElementsByClassName('price')
+    let sum =0;
+    for (let i = 0; i < price.length; i++) {
+        sum += parseInt(price[i].innerHTML)
     }
-    let prixU = e.target.nextElementSibling;
-
-    let prixupdated =
-      e.target.nextElementSibling.nextElementSibling.nextElementSibling;
-    prixupdated.innerHTML = parseInt(qte.innerHTML) * parseInt(prixU.innerHTML);
-    updateTotalPrice();
-  });
+    let PRIX_Total = document.getElementById('total-price')
+    PRIX_Total.innerHTML = sum
 }
 
-//toggle heart
 
-var heartBtn = document.getElementsByClassName("fas fa-heart");
-for (let i = 0; i < heartBtn.length; i++) {
-  heartBtn[i].addEventListener("click", function (event) {
-    var togglebtn = event.target;
+//plus btn
+let btnPlus = document.getElementsByClassName('plus-btn')
+for (let i =0;i<btnPlus.length;i++){
+    btnPlus[i].addEventListener('click',function(e){
+        let qte = e.target.nextElementSibling
+        //console.log(qte)
+        qte.innerHTML = +(qte.innerHTML) +1
+        //console.log(qte.innerHTML);
+        const PRIX_UNITAIRE = e.target.nextElementSibling.nextElementSibling.nextElementSibling
+        let prix = e.target.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
+        prix.innerHTML = +(PRIX_UNITAIRE.innerHTML) * parseInt(qte.innerHTML) 
+        UpdateTotalPrice()
+        
+    })
+}
+
+//minus btn
+let sustractionbtn = document.getElementsByClassName('sustraction-btn')
+for (let i =0;i<sustractionbtn.length;i++){
+    sustractionbtn[i].addEventListener('click',function(e){
+        let qte = e.target.previousElementSibling
+        //console.log(qte)
+        if (qte.innerHTML>0){
+            qte.innerHTML = +(qte.innerHTML) -1
+        }
+        //console.log(qte.innerHTML);
+        const PRIX_UNITAIRE = e.target.nextElementSibling
+        let prix = e.target.nextElementSibling.nextElementSibling.nextElementSibling
+        prix.innerHTML = +(PRIX_UNITAIRE.innerHTML) * parseInt(qte.innerHTML) 
+        UpdateTotalPrice()
+        
+    })
+}
+
+//like btn -- toggle
+var heartBtn = document.getElementsByClassName('fa-heart')
+for (let el of heartBtn ) {
+    el.addEventListener('click',function(e){
+        e.target.classList.toggle('red')
+    })
+}
+
+//remove Item
+let deleteBtn = document.getElementsByClassName('delete-btn')
+for (let heart of deleteBtn) {
+    heart.addEventListener('click',function(e){
+       e.target.parentElement.remove()
+       UpdateTotalPrice()
+    })
    
-      togglebtn.classList.toggle("red")
-  });
-}
-
-//remove Item 
-var deleteBtn = document.getElementsByClassName("delete-btn")
-for( let i=0; i< deleteBtn.length; i++){
-    deleteBtn[i].addEventListener("click",function() {
-         deleteBtn[i].parentElement.remove ()
-
-         
-    } )
 }
